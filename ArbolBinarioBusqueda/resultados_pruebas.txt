@@ -1,0 +1,130 @@
+
+--- 1. Crear un árbol vacío (y operar sobre él)
+  [OK]    estaVacio() = true
+  [OK]    tamaño = 0
+  [OK]    buscar en vacío devuelve null
+  [OK]    eliminar en vacío devuelve null
+  [OK]    inorden vacío
+  [OK]    preorden vacío
+  [OK]    postorden vacío
+  [OK]    amplitud = 0
+  [OK]    profundidad = 0
+  [OK]    balancear en vacío no falla y sigue vacío
+  [OK]    destruir en vacío no falla
+
+--- 2. Insertar varios empleados con ids diferentes
+  [OK]    tamaño = 8
+  [OK]    raíz = 50
+  [OK]    hijo izq de raíz = 30
+  [OK]    hijo der de raíz = 70
+  [OK]    65 es hijo derecho de 60
+
+--- 3. Intentar insertar un identificador duplicado
+  [OK]    insertar id 40 repetido lanza IllegalArgumentException -> rechazado: "Ya existe un empleado con el ID 40."
+  [OK]    el tamaño sigue siendo 8
+  [OK]    el empleado original de id 40 no cambió
+
+--- 4. Buscar un empleado existente y uno inexistente
+  [OK]    buscar(65) encuentra al empleado
+  [OK]    buscar(20) (hoja) encuentra
+  [OK]    buscar(999) devuelve null
+  [OK]    buscar(null) lanza IllegalArgumentException -> rechazado: "El ID a buscar no puede ser nulo."
+
+--- 5. Eliminar un nodo hoja
+  [OK]    devuelve el empleado eliminado (20)
+  [OK]    ya no se encuentra
+  [OK]    tamaño = 7
+  [OK]    30 quedó sin hijo izquierdo
+  [OK]    inorden ordenado
+
+--- 6. Eliminar un nodo con un solo hijo
+  [OK]    devuelve el empleado eliminado (60)
+  [OK]    65 ocupa el lugar de 60 (hijo izq de 70)
+  [OK]    tamaño = 7
+  [OK]    inorden ordenado
+
+--- 7. Eliminar nodos con dos hijos (incluida la raíz)
+  [OK]    elimina 70 (hijos 60 y 80)
+  [OK]    lo reemplaza su sucesor inorden (80)
+  [OK]    inorden ordenado
+  [OK]    elimina la raíz 50
+  [OK]    nueva raíz = 60 (sucesor inorden)
+  [OK]    inorden ordenado
+  [OK]    tamaño = 6
+  [OK]    eliminar id inexistente devuelve null
+  [OK]    tamaño sigue en 6
+  [OK]    eliminar(null) lanza IllegalArgumentException -> rechazado: "El ID a eliminar no puede ser nulo."
+
+--- 8. Los tres recorridos
+  [OK]    inorden   = [20, 30, 40, 50, 60, 65, 70, 80]
+  [OK]    preorden  = [50, 30, 20, 40, 70, 60, 65, 80]
+  [OK]    postorden = [20, 40, 30, 65, 60, 80, 70, 50]
+
+--- 9. Amplitud y profundidad
+  [OK]    profundidad = 4 niveles
+  [OK]    amplitud = 4 (nivel 3: 20, 40, 60, 80), no 8
+  [OK]    un solo nodo: profundidad = 1
+  [OK]    un solo nodo: amplitud = 1
+  [OK]    degenerado: profundidad = 5
+  [OK]    degenerado: amplitud = 1
+
+--- 10. Balancear y comprobar que se conservan los empleados
+  [OK]    antes: profundidad = 15
+  [OK]    después: profundidad = 4 (mínima para 15 nodos)
+  [OK]    después: amplitud = 8
+  [OK]    tamaño sigue siendo 15
+  [OK]    mismos empleados y mismo orden
+  [OK]    ids intactos 1..15
+  [OK]    todos siguen siendo buscables
+  [OK]    raíz = 8
+  [OK]    10 nodos: profundidad = 4
+  [OK]    10 nodos: se conservan
+  [OK]    insertar después de balancear funciona
+
+--- 11. Destruir el árbol y verificar que queda vacío
+  [OK]    estaVacio() = true
+  [OK]    tamaño = 0
+  [OK]    raíz = null
+  [OK]    buscar(50) = null
+  [OK]    profundidad = 0 y amplitud = 0
+  [OK]    se puede reutilizar: insertar tras destruir
+
+--- 12. Entradas inválidas en ArbolBST.insertar
+  [OK]    empleado null -> rechazado: "El empleado no puede ser nulo."
+  [OK]    id null -> rechazado: "El ID del empleado es obligatorio."
+  [OK]    nombre vacío -> rechazado: "El campo Nombre es obligatorio y no puede estar vacío."
+  [OK]    nombre solo espacios -> rechazado: "El campo Nombre es obligatorio y no puede estar vacío."
+  [OK]    nombre null -> rechazado: "El campo Nombre es obligatorio y no puede estar vacío."
+  [OK]    puesto vacío -> rechazado: "El campo Puesto es obligatorio y no puede estar vacío."
+  [OK]    departamento vacío -> rechazado: "El campo Departamento es obligatorio y no puede estar vacío."
+  [OK]    salario null -> rechazado: "El salario es obligatorio."
+  [OK]    salario negativo -> rechazado: "El salario no puede ser negativo."
+  [OK]    salario NaN -> rechazado: "El salario debe ser un número finito."
+  [OK]    salario infinito -> rechazado: "El salario debe ser un número finito."
+  [OK]    ningún empleado inválido quedó en el árbol
+  [OK]    salario 0 sí es válido
+
+--- 13. Validaciones usadas por la interfaz (campos numéricos y vacíos)
+  [OK]    parseId(" 25 ") = 25
+  [OK]    ID vacío -> rechazado: "El campo ID es obligatorio y no puede estar vacío."
+  [OK]    ID null -> rechazado: "El campo ID es obligatorio y no puede estar vacío."
+  [OK]    ID con letras (abc) -> rechazado: "El ID debe ser un número entero válido (sin letras, decimales ni espacios). Valor recibido: "abc"."
+  [OK]    ID decimal (3.5) -> rechazado: "El ID debe ser un número entero válido (sin letras, decimales ni espacios). Valor recibido: "3.5"."
+  [OK]    ID demasiado grande -> rechazado: "El ID debe ser un número entero válido (sin letras, decimales ni espacios). Valor recibido: "99999999999"."
+  [OK]    ID con espacios internos (1 2) -> rechazado: "El ID debe ser un número entero válido (sin letras, decimales ni espacios). Valor recibido: "1 2"."
+  [OK]    parseSalario("12500.50")
+  [OK]    parseSalario("0") = 0
+  [OK]    salario vacío -> rechazado: "El campo Salario es obligatorio y no puede estar vacío."
+  [OK]    salario con letras -> rechazado: "El salario debe ser un número válido (ejemplo: 12500.50). Valor recibido: "mil"."
+  [OK]    salario negativo -> rechazado: "El salario no puede ser negativo."
+  [OK]    salario NaN -> rechazado: "El salario debe ser un número válido (ejemplo: 12500.50). Valor recibido: "NaN"."
+  [OK]    salario Infinity -> rechazado: "El salario debe ser un número válido (ejemplo: 12500.50). Valor recibido: "Infinity"."
+  [OK]    salario notación científica -> rechazado: "El salario debe ser un número válido (ejemplo: 12500.50). Valor recibido: "1e5"."
+  [OK]    salario con coma (1,500) -> rechazado: "El salario debe ser un número válido (ejemplo: 12500.50). Valor recibido: "1,500"."
+  [OK]    salario tan grande que desborda -> rechazado: "El salario debe ser un número finito."
+  [OK]    texto requerido vacío -> rechazado: "El campo Nombre es obligatorio y no puede estar vacío."
+  [OK]    mensaje de error comprensible
+
+==============================
+Pruebas correctas: 100   Fallidas: 0
+==============================
